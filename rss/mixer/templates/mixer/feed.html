@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>RSS Mixer</title>
+
+        <!-- Bootstrap -->
+        <link href="{{ STATIC_URL }}mixer/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h1>RSS Mixer <small>Back-End test</small></h1>
+            </div>
+
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <h2>Saved Feeds (<span id="feed_count">{{ feed_count }}</span>)</h2>
+                    <form action="" method="post" role="form" class="form-inline">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.url }}
+                            <input type="submit" id="add_feed" class="btn btn-default" value="Add Feed" />
+                        </div>
+                    </form>
+
+                    <h3>Feeds</h3>
+                    <ul id="feed_list">
+                    {% for feed_slug, feed_link in feed_list.items %}
+                        <li>
+                            <a href="{{ feed_slug }}">{{ feed_link }}</a>
+                            <a href="{% url 'delete' feed_slug %}" class="feed_delete" data-url="{{ feed_slug }}"><i class="glyphicon glyphicon-minus-sign" rel="tooltip" data-toggle="tooltip" data-placement="right"></i></a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <h2>Posts (<span id="item_count">{{ item_count }}</span>)</h2>
+
+                    <div id="item_list">
+                    {% for item in item_list %}
+                        <div>
+                            <h3><a href="{{ item.link }}">{{ item.title }}</a></h3>
+                            <p>{{ item.summary }}</p>
+                            <p> Date: <em>{{ item.published }}</em>
+                            <hr/>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{{ STATIC_URL }}mixer/js/bootstrap.min.js"></script>
+        <script src="{{ STATIC_URL }}mixer/js/mixer.js"></script>
+    </body>
+</html>
