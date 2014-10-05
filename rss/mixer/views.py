@@ -1,5 +1,5 @@
 from django.core.cache import cache
-from django.shortcuts import render
+from django.http import JsonResponse
 from django.template.defaultfilters import slugify
 from django.views.generic import FormView, RedirectView
 from feedparser import parse
@@ -56,6 +56,7 @@ class MixerView(FormView):
 
 
 class DeleteView(RedirectView):
+    permanent = False
     url = '/'
 
     def get(self, request, *args, **kwargs):

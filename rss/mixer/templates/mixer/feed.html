@@ -35,12 +35,16 @@
 
                     <h3>Feeds</h3>
                     <ul id="feed_list">
-                    {% for feed_slug, feed_link in feed_list.items %}
-                        <li>
-                            <a href="{{ feed_slug }}">{{ feed_link }}</a>
-                            <a href="{% url 'delete' feed_slug %}" class="feed_delete" data-url="{{ feed_slug }}"><i class="glyphicon glyphicon-minus-sign" rel="tooltip" data-toggle="tooltip" data-placement="right"></i></a>
-                        </li>
-                    {% endfor %}
+                    {% if not feed_list %}
+                        <p>There are no feed URLs saved yet. Please use the above form to add a few.</p>
+                    {% else %}
+                        {% for feed_slug, feed_link in feed_list.items %}
+                            <li>
+                                <a href="{{ feed_link }}">{{ feed_link }}</a>
+                                <a href="{% url 'delete' feed_slug %}" class="feed_delete" data-url="{{ feed_slug }}"><i class="glyphicon glyphicon-minus-sign" rel="tooltip" data-toggle="tooltip" data-placement="right"></i></a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
                     </ul>
                 </div>
             </div>
@@ -49,14 +53,18 @@
                     <h2>Posts (<span id="item_count">{{ item_count }}</span>)</h2>
 
                     <div id="item_list">
-                    {% for item in item_list %}
-                        <div>
-                            <h3><a href="{{ item.link }}">{{ item.title }}</a></h3>
-                            <p>{{ item.summary }}</p>
-                            <p> Date: <em>{{ item.published }}</em>
-                            <hr/>
-                        </div>
-                    {% endfor %}
+                    {% if not item_list %}
+                        <p>There are no posts available. Please use the above feed form to add feed URLs.</p>
+                    {% else %}
+                        {% for item in item_list %}
+                            <div>
+                                <h3><a href="{{ item.link }}">{{ item.title }}</a></h3>
+                                <p>{{ item.summary }}</p>
+                                <p> Date: <em>{{ item.published }}</em>
+                                <hr/>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                     </div>
                 </div>
             </div>
