@@ -53,6 +53,13 @@ ROOT_URLCONF = 'rss.urls'
 
 WSGI_APPLICATION = 'rss.wsgi.application'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/tmp/db.db',
+    }
+}
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
