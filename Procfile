@@ -1,1 +1,1 @@
-web: gunicorn rss/rss/wsgi.py
+web: gunicorn rss.wsgi:application
